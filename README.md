@@ -1,0 +1,2 @@
+# DoingIt
+This is a nodejs, MongoDB, and Trello app that provides a dashboard of To Do lists. It is rough but functional and runs on a Raspberry Pi. The associated tutorial is not yet available but the source code itself is small and hopefully accessible. The source lacks polish and would benefit from some refactoring to remove duplicate code etc but I am using this currently to display and manage To Do lists for my 3 boys and myself using Trello.
