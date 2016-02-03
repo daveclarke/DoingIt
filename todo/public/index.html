@@ -1,0 +1,56 @@
+<!-- index.html -->
+<!doctype html>
+
+<html ng-app="doingItApp">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="30" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Doing It</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #todo-list              { margin-bottom:30px; }
+        .To { color:white; background-color:#ff420e; }
+        .Doing { color:white; background-color:#89da59; }
+        .Done { color:white; background-color:#80bd9e; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="core.js"></script>
+
+</head>
+<body ng-controller="mainController">
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1>Doing It <span class="label label-info">{{ todos.length }}</span></h1>
+        </div>
+
+        <div id="todo-list" class="row">
+            <div ng-repeat="todo in todos">
+                <span class="col-md-3">
+                    <h2>{{ todo.name }}</h2>
+                    <div ng-repeat="list in todo.lists">
+                        <h3 class="">{{ list.name }}</h3>
+                        <ul class="{{list.name}}">
+                            <div ng-repeat="card in list.cards">
+                             <li>{{ card.name }}</li>
+                            </div>
+                        </ul>
+                    </div>
+                    </h2>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
