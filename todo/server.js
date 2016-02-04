@@ -80,7 +80,7 @@
   }
 
   function resetBoard(doc, callback) {
-    var today = new Date().getUTCDay();
+    var today = new Date().getDay();
     console.log("today:", today);
     var day = dayOfWeek(today);
     console.log("dayOfWeek:", day);
