@@ -50,7 +50,7 @@
 
   // functions ===================
   function isWeekDay(day) {
-    return 0 <= day && day <= 4;
+    return 0 < day && day <= 5;
   }
 
   function dayOfWeek(dayIndex) {
@@ -114,18 +114,20 @@
           }
         }
 
-        for (var i = 0; i < doc.weekDay.length; i++) {
-          var match = cards.filter(function(c){ return c.name === doc.weekDay[i]; });
-          if (match.length) {
-            if (match[0].idList !== todoListId) {
-              trello.put("/1/cards/" + match[0].id, {idList: todoListId}, function(data){
-                console.log('Moving card:' + JSON.stringify(data));
+        if (isWeekDay(today)){
+          for (var i = 0; i < doc.weekDay.length; i++) {
+            var match = cards.filter(function(c){ return c.name === doc.weekDay[i]; });
+            if (match.length) {
+              if (match[0].idList !== todoListId) {
+                trello.put("/1/cards/" + match[0].id, {idList: todoListId}, function(data){
+                  console.log('Moving card:' + JSON.stringify(data));
+                });
+              }
+            } else {
+              trello.post("/1/cards", { name: doc.weekDay[i], idList: todoListId }, function(data){
+                console.log('Card created:' + JSON.stringify(data));
               });
             }
-          } else {
-            trello.post("/1/cards", { name: doc.weekDay[i], idList: todoListId }, function(data){
-              console.log('Card created:' + JSON.stringify(data));
-            });
           }
         }
 
