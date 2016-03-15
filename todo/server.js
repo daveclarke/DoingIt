@@ -12,7 +12,7 @@
   var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
   // configuration =================
-  var url = 'mongodb://win10:27017/doingIt';
+  var url = 'mongodb://192.168.1.34:27017/doingIt';
   var trello;
   mongoose.set('debug', true);
 
@@ -58,7 +58,7 @@
   }
 
   function getCards(list, callback){
-    trello.get("/1/lists/" + list.id + "/cards/open", function(err, cards) {
+    trello.get("/1/lists/" + list.id + "/cards/open?fields=id,idList,name", function(err, cards) {
       assert.equal(null, err);
       console.dir(cards);
       list.cards = cards;
@@ -67,9 +67,9 @@
   }
 
   function getBoard(doc, callback) {
-    trello.get("/1/boards/" + doc.trelloBoardId, function(err, board) {
+    trello.get("/1/boards/" + doc.trelloBoardId + "?fields=name", function(err, board) {
       assert.equal(null, err);
-      trello.get("/1/boards/" + doc.trelloBoardId + "/lists", function(err, lists) {
+      trello.get("/1/boards/" + doc.trelloBoardId + "/lists?fields=name,id", function(err, lists) {
         assert.equal(null, err);
         async.map(lists, getCards, function(err, result){
           board.lists = result;
