@@ -1,2 +1,6 @@
 
 todo/node_modules/*
+
+*.1
+
+*.gz

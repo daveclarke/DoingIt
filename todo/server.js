@@ -12,7 +12,7 @@
   var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
   // configuration =================
-  var url = 'mongodb://192.168.1.34:27017/doingIt';
+  var url = 'mongodb://127.0.0.1:27017/doingIt';
   var trello;
   mongoose.set('debug', true);
 
@@ -59,23 +59,29 @@
 
   function getCards(list, callback){
     trello.get("/1/lists/" + list.id + "/cards/open?fields=id,idList,name", function(err, cards) {
-      assert.equal(null, err);
-      console.dir(cards);
-      list.cards = cards;
+      //assert.equal(null, err);
+      if (err === null) {
+        console.dir(cards);
+        list.cards = cards;
+      } 
       callback(null, list);
     });
   }
 
   function getBoard(doc, callback) {
     trello.get("/1/boards/" + doc.trelloBoardId + "?fields=name", function(err, board) {
-      assert.equal(null, err);
-      trello.get("/1/boards/" + doc.trelloBoardId + "/lists?fields=name,id", function(err, lists) {
-        assert.equal(null, err);
-        async.map(lists, getCards, function(err, result){
-          board.lists = result;
-          callback(null, board);
+      //assert.equal(null, err);
+      if (err === null) {
+        trello.get("/1/boards/" + doc.trelloBoardId + "/lists?fields=name,id", function(err, lists) {
+          //assert.equal(null, err);
+          if (err === null) {
+            async.map(lists, getCards, function(err, result){
+              board.lists = result;
+              callback(null, board);
+            });
+          }
         });
-      });
+      }
     });
   }
 
